@@ -29,7 +29,7 @@ public struct JobParameter {
         }
         
         if let defaultValueBlock = json["defaultParameterValue"] as? JSON,
-             let defaultValue = defaultValueBlock["value"] as AnyObject! {
+             let defaultValue = defaultValueBlock["value"] {
                 self.parameter = defaultValue
         }
     }

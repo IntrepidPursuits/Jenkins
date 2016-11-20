@@ -111,7 +111,7 @@ public extension Jenkins {
                 return
         }
         
-        client?.post(path: url, params: ["description" : description as AnyObject]) { response, error in
+        client?.post(path: url, params: ["description" : description]) { response, error in
             handler(error)
         }
     }

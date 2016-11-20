@@ -66,7 +66,7 @@ internal final class APIClient: NSObject {
         self.baseURL = url
     }
     
-    func get(path: URL, rawResponse: Bool = false, headers: [String : String] = [:], params: [String : AnyObject] = [:], _ handler: @escaping (AnyObject?, Error?) -> Void) {
+    func get(path: URL, rawResponse: Bool = false, headers: [String : String] = [:], params: [String : String] = [:], _ handler: @escaping (AnyObject?, Error?) -> Void) {
         let request: URLRequest = requestFor(path, method: .GET, headers: headers, params: params, body: nil)
         let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: nil)
         let task = session.dataTask(with: request) { data, response, error in
@@ -76,7 +76,7 @@ internal final class APIClient: NSObject {
         task.resume()
     }
     
-    func post(path: URL, rawResponse: Bool = false, headers: [String : String] = [:], params: [String : AnyObject] = [:], body: String? = nil, _ handler: @escaping (AnyObject?, Error?) -> Void) {
+    func post(path: URL, rawResponse: Bool = false, headers: [String : String] = [:], params: [String : String] = [:], body: String? = nil, _ handler: @escaping (AnyObject?, Error?) -> Void) {
         let bodyData: Data? = body?.data(using: String.Encoding.utf8)
         let request: URLRequest = requestFor(path, method: .POST, headers: headers, params: params, body: bodyData)
         let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: nil)
@@ -90,7 +90,7 @@ internal final class APIClient: NSObject {
     
     // MARK: Private Helpers
     
-    private func requestFor(_ url: URL, method: APIMethod, headers: [String : String] = [:], params: [String : AnyObject] = [:], body: Data?) -> URLRequest {
+    private func requestFor(_ url: URL, method: APIMethod, headers: [String : String] = [:], params: [String : String] = [:], body: Data?) -> URLRequest {
         var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: ApiClientTimeout)
         request.httpMethod = method.description
         request.addValue(encodedAuthorizationHeader, forHTTPHeaderField: "Authorization")
@@ -106,11 +106,11 @@ internal final class APIClient: NSObject {
         } else {
             var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
             let queryItems: [URLQueryItem] = params.map {
-                if let val = $0.value as? String {
-                    return URLQueryItem(name: $0.key, value: val)
-                } else {
-                    return URLQueryItem(name: $0.key, value: String(describing: $0.value))
-                }
+//                if let val = $0.value as? String {
+                    return URLQueryItem(name: $0.key, value: $0.value)
+//                } else {
+//                    return URLQueryItem(name: $0.key, value: String(describing: $0.value))
+//                }
             }
             
             components?.queryItems = queryItems

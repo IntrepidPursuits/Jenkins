@@ -233,7 +233,7 @@ public extension Jenkins {
                 return
         }
         
-        client?.post(path: url, params: parameters as [String : AnyObject]) { response, error in
+        client?.post(path: url, params: parameters) { response, error in
             handler(error)
         }
     }

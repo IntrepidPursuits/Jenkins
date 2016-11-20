@@ -95,7 +95,7 @@ extension Jenkins {
                 return handler(nil)
         }
         
-        let parameters: [String : AnyObject] = ["depth" : depth as AnyObject]
+        let parameters: [String : String] = ["depth" : String(depth)]
         client?.get(path: url, params: parameters) { response, error in
             guard let json = response as? JSON,
                 let results = json["results"] as? JSON else {
